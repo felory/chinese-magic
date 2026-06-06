@@ -1,0 +1,40 @@
+{
+  "bookId": "zhouyi",
+  "title": "周易三层体系",
+  "lead": "先读64卦，练会看局面；再读易传，补上为什么这样看；最后再学五行干支等术数工具。",
+  "layers": [
+    {
+      "id": "source",
+      "order": 1,
+      "title": "周易原文层",
+      "subtitle": "64卦、卦辞、爻辞、彖、象、文言。",
+      "scope": "先看每一卦的局面结构，别急着接五行和命理。",
+      "routeLabel": "原文层",
+      "source": "Project Gutenberg #25501",
+      "sectionCount": 2,
+      "itemCount": 64
+    },
+    {
+      "id": "yizhuan",
+      "order": 2,
+      "title": "易传总论层",
+      "subtitle": "系辞上、系辞下、说卦、序卦、杂卦。",
+      "scope": "补上《周易》为什么看象、看爻、看变化、看卦序。",
+      "routeLabel": "易传",
+      "source": "Project Gutenberg #25501",
+      "sectionCount": 5,
+      "itemCount": 37
+    },
+    {
+      "id": "later-tools",
+      "order": 3,
+      "title": "后世术数入门层",
+      "subtitle": "五行、天干地支、纳甲、六亲、世应、六爻、梅花易数、风水命理。",
+      "scope": "这是后来的工具箱，和《周易》有关，但不要混进64卦原文。",
+      "routeLabel": "术数",
+      "source": "local notes",
+      "sectionCount": 3,
+      "itemCount": 9
+    }
+  ]
+}
