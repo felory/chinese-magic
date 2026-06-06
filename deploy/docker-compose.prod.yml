@@ -1,0 +1,15 @@
+services:
+  web:
+    image: ghcr.io/felory/chinese-magic-web:latest
+    container_name: chinese-magic-web
+    restart: unless-stopped
+    env_file:
+      - ${APP_ENV_FILE:-.env}
+    ports:
+      - "127.0.0.1:${APP_PORT:-18080}:80"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
