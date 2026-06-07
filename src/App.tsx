@@ -182,6 +182,7 @@ function App() {
   const [view, setView] = useState<View>(initialRoute.view)
   const [topbarCollapsed, setTopbarCollapsed] = useState(false)
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false)
   const [selectedBookId, setSelectedBookId] = useState<BookId>(initialRoute.bookId)
   const [selectedChapterId, setSelectedChapterId] = useState<string | null>(initialRoute.chapterId)
   const [selectedBookPage, setSelectedBookPage] = useState<BookPage>(initialRoute.bookPage)
@@ -213,6 +214,7 @@ function App() {
     setSelectedChapterId(null)
     setSelectedBookPage('guide')
     setView('outline')
+    setMobileSidebarOpen(false)
     pushRoute('outline', book.id, null, 'guide')
   }
 
@@ -221,6 +223,7 @@ function App() {
     setSelectedChapterId(null)
     setSelectedBookPage(page)
     setView('outline')
+    setMobileSidebarOpen(false)
     pushRoute('outline', book.id, null, page, selectedZhouyiLayerId)
   }
 
@@ -230,6 +233,7 @@ function App() {
     setSelectedBookPage('layers')
     setSelectedZhouyiLayerId(layerId)
     setView('outline')
+    setMobileSidebarOpen(false)
     pushRoute('outline', 'zhouyi', null, 'layers', layerId)
   }
 
@@ -238,18 +242,46 @@ function App() {
     setSelectedChapterId(chapter.id)
     setSelectedBookPage('guide')
     setView('outline')
+    setMobileSidebarOpen(false)
     pushRoute('outline', book.id, chapter.id)
   }
 
   function chooseView(nextView: View) {
     setView(nextView)
+    setMobileSidebarOpen(false)
     pushRoute(nextView, selectedBook.id, selectedChapter?.id ?? null, selectedBookPage, selectedZhouyiLayerId)
   }
 
+  function openMobileSidebar() {
+    setSidebarCollapsed(false)
+    setMobileSidebarOpen(true)
+  }
+
+  const shellClassName = [
+    topbarCollapsed ? 'app-shell topbar-collapsed' : 'app-shell',
+    mobileSidebarOpen ? 'mobile-sidebar-open' : '',
+  ]
+    .filter(Boolean)
+    .join(' ')
+  const workspaceClassName = [
+    sidebarCollapsed ? 'workspace sidebar-collapsed' : 'workspace',
+    mobileSidebarOpen ? 'mobile-sidebar-open' : '',
+  ]
+    .filter(Boolean)
+    .join(' ')
+
   return (
-    <main className={topbarCollapsed ? 'app-shell topbar-collapsed' : 'app-shell'}>
+    <main className={shellClassName}>
       <header className={topbarCollapsed ? 'topbar collapsed' : 'topbar'}>
         <div className="brand-block">
+          <button
+            aria-label="打开书籍菜单"
+            className="mobile-menu-button"
+            onClick={openMobileSidebar}
+            type="button"
+          >
+            ☰
+          </button>
           <span className="seal">玄</span>
           <div className="brand-copy">
             <p className="eyebrow">三书世界</p>
@@ -280,7 +312,7 @@ function App() {
         </button>
       </header>
 
-      <section className={sidebarCollapsed ? 'workspace sidebar-collapsed' : 'workspace'}>
+      <section className={workspaceClassName}>
         <BookRail
           books={content.books}
           collapsed={sidebarCollapsed}
@@ -294,6 +326,14 @@ function App() {
           onChapterSelect={chooseChapter}
           onToggle={() => setSidebarCollapsed((collapsed) => !collapsed)}
         />
+        {mobileSidebarOpen && (
+          <button
+            aria-label="关闭书籍菜单"
+            className="sidebar-scrim"
+            onClick={() => setMobileSidebarOpen(false)}
+            type="button"
+          />
+        )}
         <div className="main-panel">
           {view === 'outline' && selectedChapter && (
             <Reader book={selectedBook} chapter={selectedChapter} onChapterSelect={chooseChapter} />

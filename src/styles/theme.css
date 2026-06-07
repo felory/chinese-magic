@@ -5,11 +5,13 @@
   --shell-padding-x: 12px;
   --shell-padding-bottom: 12px;
   --workspace-gap: 10px;
-  --sidebar-width-min: 320px;
-  --sidebar-width-max: 400px;
+  --sidebar-width-min: 300px;
+  --sidebar-width-max: 360px;
   --sidebar-width-tablet-min: 280px;
   --sidebar-width-tablet-max: 340px;
   --sidebar-collapsed-width: 64px;
+  --sidebar-mobile-width: 78vw;
+  --sidebar-mobile-max: 300px;
   --reader-original-min: 240px;
   --reader-original-ratio: 0.72fr;
   --reader-notes-min: 440px;
